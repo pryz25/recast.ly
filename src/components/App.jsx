@@ -1,6 +1,7 @@
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoPlayer from './VideoPlayer.js';
+// import VideoListEntry from './VideoListEntry.js'
 
 
 class App extends React.Component {
@@ -11,7 +12,7 @@ class App extends React.Component {
       video: exampleVideoData[0]
     };
   }
-
+  // Unable to get this jerk working. Props path is in VideoList {App line 37}
   onTitleClick() {
     this.setState({
       list: exampleVideoData,
