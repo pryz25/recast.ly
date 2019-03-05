@@ -11,14 +11,15 @@ class App extends React.Component {
       list: exampleVideoData,
       video: exampleVideoData[0]
     };
+    this.onTitleClick = this.onTitleClick.bind(this);
   }
   // Unable to get this jerk working. Props path is in VideoList {App line 37}
-  onTitleClick() {
+  onTitleClick(event) {
+    let newVideo = this.state.list.filter(vid => vid.id.videoId === event.target.id)[0]; //filter data trom id
     this.setState({
-      list: exampleVideoData,
-      video: exampleVideoData[0]
+      video: newVideo
     });
-    console.log('click');
+    // onsole.log(newVideo);
   }
 
   render() {
@@ -31,10 +32,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em><VideoPlayer video={exampleVideoData[0]}/></em></h5></div>
+            <div><h5><em><VideoPlayer video={this.state.video}/></em></h5></div>
           </div>
           <div className="col-md-5">
-            <div><h5><em><VideoList videos={exampleVideoData} click={this.onTitleClick.bind(this)}/></em></h5></div>
+            <div><h5><em><VideoList videos={this.state.list} click={this.onTitleClick}/></em></h5></div>
           </div>
         </div>
       </div>
