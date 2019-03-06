@@ -1,25 +1,45 @@
+import YOUTUBE_API_KEY from '../config/youtube.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
-import VideoPlayer from './VideoPlayer.js';
-// import VideoListEntry from './VideoListEntry.js'
+import VideoPlayer from './VideoPlayer.js'; 
+import searchYouTube from '../lib/searchYouTube.js';
+import Search from './Search.js';
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: exampleVideoData,
+      list: exampleVideoData, 
       video: exampleVideoData[0]
     };
     this.onTitleClick = this.onTitleClick.bind(this);
   }
-  // Unable to get this jerk working. Props path is in VideoList {App line 37}
+  
   onTitleClick(event) {
     let newVideo = this.state.list.filter(vid => vid.id.videoId === event.target.id)[0]; //filter data trom id
     this.setState({
       video: newVideo
     });
-    // onsole.log(newVideo);
+  }
+
+  handleChange(event) {
+    searchYouTube({key: YOUTUBE_API_KEY, max: 5, query: event.target.id.value}, (result) => this.setState({
+      list: result, 
+      video: result[0]
+    })
+    );
+  }
+
+  
+  // Mounting tests aren't passsing 
+
+  componentDidMount() {
+    searchYouTube({key: YOUTUBE_API_KEY, max: 5, query: 'dogs'}, (result) => this.setState({
+      list: result, 
+      video: result[0]
+    })
+    );
   }
 
   render() {
@@ -27,7 +47,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <div><h5><em><Search query={this.handleChange}/></em></h5></div> 
           </div>
         </nav>
         <div className="row">
