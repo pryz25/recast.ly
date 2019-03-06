@@ -16,13 +16,18 @@ class App extends React.Component {
     this.onTitleClick = this.onTitleClick.bind(this);
   }
   
+
   onTitleClick(event) {
     let newVideo = this.state.list.filter(vid => vid.id.videoId === event.target.id)[0]; //filter data trom id
     this.setState({
       video: newVideo
     });
   }
-
+  
+  bounceChange() {
+    _.debounce(handleChange, 1000);
+  }
+  
   handleChange(event) {
     searchYouTube({key: YOUTUBE_API_KEY, max: 5, query: event.target.id.value}, (result) => this.setState({
       list: result, 
